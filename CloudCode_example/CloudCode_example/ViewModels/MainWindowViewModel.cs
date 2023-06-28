@@ -1,6 +1,8 @@
 ﻿using CloudCode_example.Classes;
 using Microsoft.VisualBasic;
 using ReactiveUI;
+using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
@@ -8,7 +10,7 @@ using System.IO;
 
 namespace CloudCode_example.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public string folder = "codes";
 
@@ -18,8 +20,8 @@ namespace CloudCode_example.ViewModels
             set => this.RaiseAndSetIfChanged(ref _data_input, value);
         }
 
-        private string? _cloudCode_generated; //Generated CloudCode
-        public string? CloudCodeGenerated
+        private string _cloudCode_generated = "codes/default.PNG"; //Generated CloudCode
+        public string CloudCodeGenerated
         {
             get => _cloudCode_generated;
             set => this.RaiseAndSetIfChanged(ref _cloudCode_generated, value);
@@ -44,7 +46,7 @@ namespace CloudCode_example.ViewModels
                 }
                 Bitmap file = generator.Generate(DataInput);
                 file.Save(sourcefile, ImageFormat.Png);
-                CloudCodeGenerated = "/" + sourcefile;
+                CloudCodeGenerated = sourcefile;
             }
         }
 
