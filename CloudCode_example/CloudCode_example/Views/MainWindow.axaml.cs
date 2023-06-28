@@ -1,3 +1,4 @@
+using Avalonia;
 using Avalonia.Controls;
 
 namespace CloudCode_example.Views
@@ -7,6 +8,9 @@ namespace CloudCode_example.Views
         public MainWindow()
         {
             InitializeComponent();
+#if DEBUG
+            this.AttachDevTools();
+#endif
         }
     }
 }

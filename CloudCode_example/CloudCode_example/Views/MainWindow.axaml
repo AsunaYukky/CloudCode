@@ -15,6 +15,28 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+  <Grid RowDefinitions="auto, auto, auto" ColumnDefinitions="*" Margin="10">
+
+    <Grid Grid.Row="0" RowDefinitions="auto, auto" ColumnDefinitions="auto, auto, auto" Margin="10">
+      <TextBox Grid.Row="0" Grid.Column="0" Watermark="Put text to encode here" Text="{Binding DataInput}" MinHeight="200" MinWidth="300" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="200" MaxWidth="300" />
+      <Button Grid.Row="0" Grid.Column="1" Command="{Binding Generate}" Margin="10" >Generate CloudCode</Button>
+      <Image Grid.Row="0" Source="{Binding CloudCodeGenerated}" MinHeight="220" MinWidth="220" />
+      <TextBlock Grid.Row="1" Text="{Binding CloudCodeGenerated}" />
+
+    </Grid>
+
+    <Grid Grid.Row="1" RowDefinitions="auto" Margin="10">
+
+    </Grid>
+
+    <Grid Grid.Row="2" RowDefinitions="auto" ColumnDefinitions="auto, auto, auto" Margin="10">
+
+      <Button Grid.Column="1" Margin="10">
+        Open CloudCode File
+      </Button>
+      <TextBox Grid.Column="2" Watermark="Here will be decoded data" Text="{Binding DataOutput}" MinHeight="200" MinWidth="300" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="200" MaxWidth="300" Margin="10" />
+
+    </Grid>
+  </Grid>
 
 </Window>
