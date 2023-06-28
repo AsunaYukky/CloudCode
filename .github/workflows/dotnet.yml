@@ -25,4 +25,4 @@ jobs:
     - name: Build
       run: dotnet build CloudCode_example/CloudCode_example.sln --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test CloudCode_example/CloudCode_example.sln --no-build --verbosity normal
