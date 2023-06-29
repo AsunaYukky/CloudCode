@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
+using static CloudCode_example.Classes.CloudCode;
 using static CloudCode_example.Classes.HammingCoder;
 
 namespace CloudCode_example.Classes
@@ -20,49 +21,15 @@ namespace CloudCode_example.Classes
         private const int BORDER_START = EMPTY_SPACE;
         private const int DATA_START = BORDER_START + BORDER_WIDTH + EMPTY_SPACE;
 
-        //public class Generator
-        //{
-        //    private Random _rand = new Random();
-        //    private HammingEncoder _encoder = new HammingEncoder();
-
-        //    public Bitmap Generate(string message)
-        //    {
-        //        byte[] messageBytes = _encoder.Encode(Encoding.UTF8.GetBytes(message));
-        //        int redundancy = (int)(messageBytes.Length * 0.05);
-        //        messageBytes = messageBytes.Concat(new byte[redundancy]).ToArray();
-
-        //        int size = (int)Math.Ceiling(Math.Sqrt(messageBytes.Length));
-
-        //        Bitmap bitmap = new Bitmap(size, size, PixelFormat.Format32bppArgb);
-
-        //        bitmap.SetPixel(0, 0, Color.FromArgb(size, 0, 0, 0));
-        //        bitmap.SetPixel(1, 0, Color.FromArgb(messageBytes.Length - redundancy, 0, 0, 0));
-
-        //        for (int i = 2; i < size * size; i++)
-        //        {
-        //            int x = i % size;
-        //            int y = i / size;
-
-        //            if (i - 2 < messageBytes.Length)
-        //            {
-        //                bitmap.SetPixel(x, y, Color.FromArgb(_rand.Next(256), _rand.Next(256), messageBytes[i - 2]));
-        //            }
-        //            else
-        //            {
-        //                bitmap.SetPixel(x, y, Color.FromArgb(_rand.Next(256), _rand.Next(256), _rand.Next(256)));
-        //            }
-        //        }
-        //        return bitmap;
-        //    }
-
         public class Generator
         {
             private Random _rand = new Random();
-            private HammingEncoder _encoder = new HammingEncoder();
+            //private HammingEncoder _encoder = new HammingEncoder();
 
             public Bitmap Generate(string message)
             {
-                byte[] messageBytes = _encoder.Encode(Encoding.UTF8.GetBytes(message));
+                //byte[] messageBytes = _encoder.Encode(Encoding.UTF8.GetBytes(message));
+                byte[] messageBytes = Encoding.UTF8.GetBytes(message);
                 int redundancy = (int)(messageBytes.Length * 0.05);
                 messageBytes = messageBytes.Concat(new byte[redundancy]).ToArray();
 
@@ -140,7 +107,7 @@ namespace CloudCode_example.Classes
 
         public class Decoder
         {
-            private HammingDecoder _decoder = new HammingDecoder();
+            //private HammingDecoder _decoder = new HammingDecoder();
 
             public string Decode(Bitmap bitmap)
             {
@@ -172,7 +139,8 @@ namespace CloudCode_example.Classes
                     }
                 }
 
-                byte[] decodedBytes = _decoder.Decode(messageBytes.ToArray());
+                //byte[] decodedBytes = _decoder.Decode(messageBytes.ToArray());
+                byte[] decodedBytes = messageBytes.ToArray();
 
                 return Encoding.UTF8.GetString(decodedBytes);
             }

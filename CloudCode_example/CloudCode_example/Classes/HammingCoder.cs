@@ -19,7 +19,14 @@ namespace CloudCode_example.Classes
                     bool[] dataBits = new bool[4];
                     for (int j = 0; j < 4; j++)
                     {
-                        dataBits[j] = bitArray[i + j];
+                        if (i + j < bitArray.Length)
+                        {
+                            dataBits[j] = bitArray[i + j];
+                        }
+                        else
+                        {
+                            dataBits[j] = false;  // padding bit
+                        }
                     }
 
                     bool[] encodedBlock = EncodeBlock(dataBits);
@@ -58,7 +65,14 @@ namespace CloudCode_example.Classes
                     bool[] encodedBlock = new bool[7];
                     for (int j = 0; j < 7; j++)
                     {
-                        encodedBlock[j] = encodedBits[i + j];
+                        if (i + j < encodedBits.Length)
+                        {
+                            encodedBlock[j] = encodedBits[i + j];
+                        }
+                        else
+                        {
+                            encodedBlock[j] = false;  // padding bit
+                        }
                     }
 
                     bool[] decodedBlock = DecodeBlock(encodedBlock);

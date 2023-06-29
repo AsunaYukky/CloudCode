@@ -29,13 +29,20 @@
 
     </Grid>
 
-    <Grid Grid.Row="2" RowDefinitions="auto" ColumnDefinitions="auto, auto, auto" Margin="10">
+    <Grid Grid.Row="2" RowDefinitions="auto, auto" ColumnDefinitions="auto, auto, auto" Margin="10">
 
-      <Button Grid.Column="1" Margin="10">
+      <Button Grid.Row="0" Grid.Column="0" Margin="10" Command="{Binding OpenFile}">
         Open CloudCode File
       </Button>
-      <TextBox Grid.Column="2" Watermark="Here will be decoded data" Text="{Binding DataOutput}" MinHeight="200" MinWidth="300" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="200" MaxWidth="300" Margin="10" />
 
+      <Button Grid.Row="0" Grid.Column="1" Margin="10" Command="{Binding Decode}" IsEnabled="{Binding isSelected}">
+        Decode this!
+      </Button>
+      
+      <TextBox Grid.Row="0" Grid.Column="2" Watermark="Here will be decoded data" Text="{Binding DataOutput}" MinHeight="200" MinWidth="300" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="200" MaxWidth="300" Margin="10" />
+
+      <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding CloudCodeToDecode}" />
+      
     </Grid>
   </Grid>
 

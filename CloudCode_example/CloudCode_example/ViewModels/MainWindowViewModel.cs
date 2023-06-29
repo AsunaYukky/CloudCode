@@ -1,12 +1,17 @@
-﻿using CloudCode_example.Classes;
+﻿using Avalonia.Controls;
+using CloudCode_example.Classes;
+using Emgu.CV;
+using Emgu.CV.Structure;
 using Microsoft.VisualBasic;
 using ReactiveUI;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace CloudCode_example.ViewModels
 {
@@ -25,6 +30,13 @@ namespace CloudCode_example.ViewModels
         {
             get => _cloudCode_generated;
             set => this.RaiseAndSetIfChanged(ref _cloudCode_generated, value);
+        }
+
+        private string? _cloudCode_to_decode; //CloudCode to decode
+        public string? CloudCodeToDecode
+        {
+            get => _cloudCode_to_decode;
+            set => this.RaiseAndSetIfChanged(ref _cloudCode_to_decode, value);
         }
 
         private string? _data_output; //Output information data
@@ -47,6 +59,50 @@ namespace CloudCode_example.ViewModels
                 Bitmap file = generator.Generate(DataInput);
                 file.Save(sourcefile, ImageFormat.Png);
                 CloudCodeGenerated = sourcefile;
+            }
+        }
+
+        public void Decode() {
+            if (CloudCodeToDecode is not null)
+            {
+                //Image<Bgr, byte> emguImage = Classes.ImageConverter.ConvertFromNetImage(CloudCodeToDecode);
+
+                //List<Point> points = new List<Point>(ImagePreprocessor.DetectCloudCodeCorners(emguImage));
+
+                //Image<Bgr, byte> preprocessedImage = ImagePreprocessor.PreprocessImage(CloudCodeToDecode, points);
+
+                //Bitmap bitmap = new Bitmap(preprocessedImage.ToBitmap());
+
+                var decoder = new CloudCode_example.Classes.CloudCode.Decoder();
+
+                System.Drawing.Image image = System.Drawing.Image.FromFile(CloudCodeToDecode);
+                DataOutput = decoder.Decode((Bitmap)image);
+            }
+        }
+
+        public async Task OpenFile()
+        {
+            var dialog = new OpenFileDialog();
+            dialog.AllowMultiple = false; // Можно выбрать только один файл
+
+            // Открываем диалоговое окно и ждем пока пользователь выберет файл
+            string[] result = await dialog.ShowAsync(new Window());
+
+            // Если файл был выбран, обновляем CloudCodeToDecode
+            if (result != null && result.Length > 0)
+            {
+                CloudCodeToDecode = result[0];
+                isSelected = true;
+            }
+        }
+
+        private bool? _is_selected = false;
+        public bool? isSelected {
+            get {
+                return _is_selected;
+            }
+            set {
+                this.RaiseAndSetIfChanged(ref _is_selected, value);
             }
         }
 
